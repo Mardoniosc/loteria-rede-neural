@@ -18,11 +18,8 @@
 from keras.models  import Sequential
 from keras.layers  import Dense
 from sklearn.model_selection import train_test_split
-from GamesLoteria import GamesLoteria, gameInstanciado, np, pd, msno
+from GamesLoteria import GamesLoteria, np, pd, msno
 import random
-
-# VARIAVEIS GLOBAIS
-
 
 class RedeNeural():
   def __init__(self, URL_DOWNLOAD, TARGET_PATH, NAME_FILE_HTML, DADOS, DEZENAS, NUMBER_GAMES, PROBABLY_GOOD, GAME_TEST, TIPO_JOGO_NUMBER):
@@ -34,25 +31,43 @@ class RedeNeural():
     self.NUMBER_GAMES = NUMBER_GAMES
     self.PROBABLY_GOOD = PROBABLY_GOOD
     self.GAME_TEST = GAME_TEST
-    
-    gameInstanciadoLoteria = gameInstanciado(URL_DOWNLOAD, TARGET_PATH, NAME_FILE_HTML, DADOS)
+    self.TIPO_JOGO_NUMBER = TIPO_JOGO_NUMBER
     
     np.random.seed(8)
     print('Separando target e classes...')
     # Separando target e classes
-    GamesLoteria.downloadZipAndUnzip(gameInstanciadoLoteria.getUrlDownload(), gameInstanciadoLoteria.getTargetPath())
+    GamesLoteria.downloadZipAndUnzip(self.URL_DOWNLOAD, self.TARGET_PATH)
 
-    df = GamesLoteria.getByAllGames(gameInstanciadoLoteria.getNameFileHtml())
+    df = GamesLoteria.getByAllGames(self.NAME_FILE_HTML)
     # Check dataset
     df.shape
     df.dtypes
-    
-    df_nn = GamesLoteria.createDataFrameModel(gameInstanciadoLoteria.getData(), df, TIPO_JOGO_NUMBER)
+
+    #  TRANFORMANDO DADOS 
+    print('Convertendo dados...')
+    df['data_sorteio_conv'] = df.iloc[:,1]
+    df.data_sorteio_conv = pd.to_datetime(df.data_sorteio_conv)
+
+    df['day']   = df.data_sorteio_conv.dt.day
+    df['month'] = df.data_sorteio_conv.dt.month 
+    df['year']  = df.data_sorteio_conv.dt.year
+
+    df_ganhadores = df[:]
+
+    df_ganhadores.head()
+
+    # Removendo valores nulos 
+    print('Removendo valores nulos...')
+    df = df.dropna(subset=['Concurso'])
+    df = df.drop(['Cidade', 'UF'], axis=1)
+
+    df_nn = GamesLoteria.createDataFrameModel(self.DADOS, df, self.TIPO_JOGO_NUMBER)
+    df_nn.columns = map(str.lower, df_nn.columns)
+    df_nn.head(self.TIPO_JOGO_NUMBER)
 
     # Definição do seed para a reproducidade do modelo
-
-    features = df_nn.iloc[:,0:TIPO_JOGO_NUMBER]
-    target   = df_nn.iloc[:,TIPO_JOGO_NUMBER]
+    features = df_nn.iloc[:,0:self.TIPO_JOGO_NUMBER]
+    target   = df_nn.iloc[:,self.TIPO_JOGO_NUMBER]
 
     # Dividindo dataset entre treino e teste
     print('Dividindo dataset entre treino e teste')
@@ -61,7 +76,7 @@ class RedeNeural():
     # Criando modelo
     print('Criando modelo...')
     modelo = Sequential()
-    modelo.add(Dense(10, input_dim=TIPO_JOGO_NUMBER, activation='relu'))
+    modelo.add(Dense(10, input_dim=self.TIPO_JOGO_NUMBER, activation='relu'))
     modelo.add(Dense(12, activation='relu'))
     modelo.add(Dense(1, activation='sigmoid'))
 
@@ -81,8 +96,8 @@ class RedeNeural():
     print("\n%s: %2f%%" % (modelo.metrics_names[1], scores[1]*100))
 
     # Teste de probabilidade de um jogo
-    numero_sorteio = [GAME_TEST]
-    print('Realiznaod teste de probabilidade no jogo -> ', numero_sorteio)
+    numero_sorteio = [self.GAME_TEST]
+    print('Realizando teste de probabilidade no jogo -> ', numero_sorteio)
 
     y_predict = pd.DataFrame(numero_sorteio)
     y_predict
@@ -96,7 +111,7 @@ class RedeNeural():
     predict_proba = modelo.predict_proba(y_predict)
     print("Probabilidade: ", round((predict_proba[0][0]*100),2), "%")
 
-    self.gameTip(NUMBER_GAMES, PROBABLY_GOOD, df_nn, modelo, TIPO_JOGO_NUMBER, DEZENAS)
+    self.gameTip(self.NUMBER_GAMES, self.PROBABLY_GOOD, df_nn, modelo, self.TIPO_JOGO_NUMBER, self.DEZENAS)
 
   @staticmethod
   def gameTip(jogos, probabilidade_boa, df_nn, modelo, TIPO_JOGO_NUMBER, dezenas_simbol):

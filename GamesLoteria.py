@@ -30,31 +30,6 @@ class GamesLoteria:
   def __init__(self):
     pass
 
-  def setUrlDownload(self, url):
-    self.url = url
-
-  def setTargetPath(self, target_path):
-    self.target_path = target_path
-
-  def setNameFileHtml(self, fileHtml):
-    self.fileHtml = fileHtml
-
-  def setData(self, bolas_sorteadas):
-    self.bolas_sorteadas = bolas_sorteadas
-
-  def getUrlDownload(self):
-    return self.url
-
-  def getTargetPath(self):
-    return self.target_path
-
-  def getNameFileHtml(self):
-    return self.fileHtml
-
-  def getData(self):
-    return self.bolas_sorteadas
-  
-
   @staticmethod
   def downloadZipAndUnzip(url, target_path):
     print('Atualiznando jogos sorteados...')
@@ -70,7 +45,6 @@ class GamesLoteria:
 
   @staticmethod
   def getByAllGames(fileHtml):
-
     f = open(fileHtml, 'r', encoding='latin-1') 
     table=f.read()
 
@@ -100,14 +74,6 @@ class GamesLoteria:
     df_nn.head(TIPO_JOGO_NUMBER)
 
     return df_nn
-
-def gameInstanciado(url, target_path, fileHtml, bolas_sorteadas):
-  gameLoteria = GamesLoteria()
-  gameLoteria.setUrlDownload(url)
-  gameLoteria.setData(bolas_sorteadas)
-  gameLoteria.setTargetPath(target_path)
-  gameLoteria.setNameFileHtml(fileHtml)
-  return gameLoteria
 
 if __name__ == "__main__":
   GamesLoteria()
