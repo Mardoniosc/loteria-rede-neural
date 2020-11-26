@@ -1,5 +1,5 @@
 from RedeNeural import RedeNeural
-
+import os
 class Principal():
   def __init__(self):
     self.menuSistema()
@@ -9,6 +9,7 @@ class Principal():
     print("\n\n ## Olá meu nome é SmalLoteria, sou um aplicativo de geração de jogos. ##\n\n")
 
     def optionGames():
+      os.system('clear') or None
       print("""
           Essas são minhas Opções até o momento:
           (1) = Gerar Jogos Lotofacil 

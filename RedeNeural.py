@@ -158,6 +158,7 @@ class RedeNeural():
         jogo = str(sorted(jogo))
         jogo = jogo.replace('[', '')
         jogo = jogo.replace(']', '')
+        jogo = jogo.replace(' ', '')
         with open(TIPO_JOGO_NOME + '.txt', 'a', encoding="utf-8") as fd:
           fd.write(jogo)  # Inserindo o jogo no txt
           fd.write('\n')
