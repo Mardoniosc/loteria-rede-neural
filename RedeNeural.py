@@ -112,10 +112,10 @@ class RedeNeural():
     predict_proba = modelo.predict_proba(y_predict)
     print("Probabilidade: ", round((predict_proba[0][0]*100),2), "%")
 
-    self.gameTip(self.NUMBER_GAMES, self.PROBABLY_GOOD, df_nn, modelo, self.TIPO_JOGO_NUMBER, self.DEZENAS)
+    self.gameTip(self.NUMBER_GAMES, self.PROBABLY_GOOD, df_nn, modelo, self.TIPO_JOGO_NUMBER, self.DEZENAS, self.TIPO_JOGO_NOME)
 
   @staticmethod
-  def gameTip(jogos, probabilidade_boa, df_nn, modelo, TIPO_JOGO_NUMBER, dezenas_simbol):
+  def gameTip(jogos, probabilidade_boa, df_nn, modelo, TIPO_JOGO_NUMBER, dezenas_simbol, TIPO_JOGO_NOME):
       jogo_ok = False
       print("####################################################################")
       print("################        Dicas para concurso nº      ################")
@@ -151,11 +151,11 @@ class RedeNeural():
           listJogos.append(dezenas)  
           print("Probabilidade de {0} % -> Dezenas: {1}".format(probabilidade_atual, sorted(dezenas)))
       
-      if os.path.isfile('jogos.txt'):
-        os.remove('jogos.txt')
+      if os.path.isfile(TIPO_JOGO_NOME + '.txt'):
+        os.remove(TIPO_JOGO_NOME + '.txt')
       
       for jogo in listJogos:
-        with open('jogos.txt', 'a', encoding="utf-8") as fd:
+        with open(TIPO_JOGO_NOME + '.txt', 'a', encoding="utf-8") as fd:
           fd.write(str(jogo))  # Inserindo o jogo no txt
           fd.write('\n')
           fd.close()
