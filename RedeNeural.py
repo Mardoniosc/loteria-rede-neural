@@ -155,7 +155,10 @@ class RedeNeural():
         os.remove(TIPO_JOGO_NOME + '.txt')
       
       for jogo in listJogos:
+        jogo = str(sorted(jogo))
+        jogo = jogo.replace('[', '')
+        jogo = jogo.replace(']', '')
         with open(TIPO_JOGO_NOME + '.txt', 'a', encoding="utf-8") as fd:
-          fd.write(str(jogo))  # Inserindo o jogo no txt
+          fd.write(jogo)  # Inserindo o jogo no txt
           fd.write('\n')
           fd.close()
