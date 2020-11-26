@@ -19,7 +19,7 @@ from keras.models  import Sequential
 from keras.layers  import Dense
 from sklearn.model_selection import train_test_split
 from GamesLoteria import GamesLoteria, np, pd, msno
-import random
+import random, os.path, os
 
 class RedeNeural():
   def __init__(self, URL_DOWNLOAD, TARGET_PATH, NAME_FILE_HTML, DADOS, DEZENAS, NUMBER_GAMES, PROBABLY_GOOD, GAME_TEST, TIPO_JOGO_NUMBER, TIPO_JOGO_NOME):
@@ -150,3 +150,12 @@ class RedeNeural():
                   # print(' Probabilidade atual => ', probabilidade_atual ,'% Numero sorteados =>',dezenas, '\n')
           listJogos.append(dezenas)  
           print("Probabilidade de {0} % -> Dezenas: {1}".format(probabilidade_atual, sorted(dezenas)))
+      
+      if os.path.isfile('jogos.txt'):
+        os.remove('jogos.txt')
+      
+      for jogo in listJogos:
+        with open('jogos.txt', 'a', encoding="utf-8") as fd:
+          fd.write(str(jogo))  # Inserindo o jogo no txt
+          fd.write('\n')
+          fd.close()

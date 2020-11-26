@@ -1,16 +1,8 @@
 __pycache__
 
-# LOTOFACIL
-d_lotfac.htm
-D_lotfac.zip
-lotfacil.gif
 
-#MEGA SENA
-d_megasc.htm
-D_mgsasc.zip
-t2.gif
 
-#LOTO MANIA
-D_lotoma.zip
-d_lotman.htm
-t11.gif
+*.zip
+*.htm
+*.gif
+*.txt
