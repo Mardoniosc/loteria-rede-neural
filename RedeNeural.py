@@ -22,7 +22,7 @@ from GamesLoteria import GamesLoteria, np, pd, msno
 import random
 
 class RedeNeural():
-  def __init__(self, URL_DOWNLOAD, TARGET_PATH, NAME_FILE_HTML, DADOS, DEZENAS, NUMBER_GAMES, PROBABLY_GOOD, GAME_TEST, TIPO_JOGO_NUMBER):
+  def __init__(self, URL_DOWNLOAD, TARGET_PATH, NAME_FILE_HTML, DADOS, DEZENAS, NUMBER_GAMES, PROBABLY_GOOD, GAME_TEST, TIPO_JOGO_NUMBER, TIPO_JOGO_NOME):
     self.URL_DOWNLOAD = URL_DOWNLOAD
     self.TARGET_PATH = TARGET_PATH
     self.NAME_FILE_HTML = NAME_FILE_HTML
@@ -32,7 +32,8 @@ class RedeNeural():
     self.PROBABLY_GOOD = PROBABLY_GOOD
     self.GAME_TEST = GAME_TEST
     self.TIPO_JOGO_NUMBER = TIPO_JOGO_NUMBER
-    
+    self.TIPO_JOGO_NOME = TIPO_JOGO_NOME
+
     np.random.seed(8)
     print('Separando target e classes...')
     # Separando target e classes
