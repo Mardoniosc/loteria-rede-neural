@@ -5,11 +5,11 @@ class Principal():
     self.menuSistema()
 
   def menuSistema(self):
+    # os.system('clear') or None
     #Apresentação
     print("\n\n ## Olá meu nome é SmalLoteria, sou um aplicativo de geração de jogos. ##\n\n")
 
     def optionGames():
-      os.system('clear') or None
       print("""
           Essas são minhas Opções até o momento:
           (1) = Gerar Jogos Lotofacil 

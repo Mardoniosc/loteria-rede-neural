@@ -148,13 +148,18 @@ class RedeNeural():
                   # Valida qual a probabilidade da seguência ser sorteada
                   probabilidade_atual = int(modelo.predict_proba(pd.DataFrame([dezenas]))[0][0]*100)
                   # print(' Probabilidade atual => ', probabilidade_atual ,'% Numero sorteados =>',dezenas, '\n')
-          listJogos.append(dezenas)  
+          listJogos.append(dezenas)
           print("Probabilidade de {0} % -> Dezenas: {1}".format(probabilidade_atual, sorted(dezenas)))
       
       if os.path.isfile(TIPO_JOGO_NOME + '.txt'):
         os.remove(TIPO_JOGO_NOME + '.txt')
       
       for jogo in listJogos:
+        if(TIPO_JOGO_NUMBER == 20):
+          while(len(jogo) < 50):
+            numero = random.randrange(0,100)
+            if not numero in jogo:
+              jogo.append(numero)
         jogo = str(sorted(jogo))
         jogo = jogo.replace('[', '')
         jogo = jogo.replace(']', '')
