@@ -72,7 +72,8 @@ class GamesLoteria:
     df_nn = df_clean[bolas_sorteadas] 
     df_nn.columns = map(str.lower, df_nn.columns)
     df_nn.head(TIPO_JOGO_NUMBER)
-
+    if(TIPO_JOGO_NUMBER == 15):
+      df_nn.loc[df_nn['ganhadores_15_números'] > 0, 'ganhadores_15_números'] = 1
     return df_nn
 
 if __name__ == "__main__":
