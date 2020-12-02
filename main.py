@@ -2,12 +2,7 @@ import os
 
 from RedeNeural import RedeNeural
 from loteria import resultados
-
-# variaveis globais
-
-RESULTADO_LOTOFACIL = [3,6,8,10,13,14,15,16,17,18,19,20,21,22,23]
-RESULTADO_MEGASENA = [2, 5, 10, 29, 34, 44]
-RESULTADO_LOTOMANIA = [2,6,7,14,22,28,29,34,38,46,52,59,60,63,66,74,81,84,85,91]
+from auxFunc import UltimoResultado
 
 class MenuPrincipal():
     def __init__(self):
@@ -156,7 +151,11 @@ class MenuPrincipal():
 
     def validGamesLotofacil(self):
         os.system('clear') or None
-        print('\n\n ##### RESULTADO LOTOFACIL  ##### \n\n')
+        URL_DOWNLOAD = 'http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_lotfac.zip'
+        TARGET_PATH = 'D_lotfac.zip'
+        NAME_FILE_HTML = 'd_lotfac.htm'
+        RESULTADO_LOTOFACIL = UltimoResultado(URL_DOWNLOAD, TARGET_PATH, NAME_FILE_HTML)
+        print('\n##### RESULTADO LOTOFACIL  ##### \n\n')
         tipo = 'lotofacil'
         nomeArquivo = 'Lotofacil'
         resultados(tipo, RESULTADO_LOTOFACIL, nomeArquivo)
@@ -166,7 +165,11 @@ class MenuPrincipal():
 
     def validGamesLotoMania(self):
         os.system('clear') or None
-        print('\n\n ##### RESULTADO LOTOMANIA  ##### \n\n')
+        URL_DOWNLOAD = 'http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_lotoma.zip'
+        TARGET_PATH = 'D_lotoma.zip'
+        NAME_FILE_HTML = 'd_lotman.htm'
+        RESULTADO_LOTOMANIA = UltimoResultado(URL_DOWNLOAD, TARGET_PATH, NAME_FILE_HTML)
+        print('\n ##### RESULTADO LOTOMANIA  ##### \n\n')
         tipo = 'lotomania'
         nomeArquivo = 'Lotomania'
         resultados(tipo, RESULTADO_LOTOMANIA, nomeArquivo)
@@ -176,7 +179,11 @@ class MenuPrincipal():
 
     def validGamesMegaSena(self):
         os.system('clear') or None
-        print('\n\n ##### RESULTADO MEGA SENA  ##### \n\n')
+        URL_DOWNLOAD = 'http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_mgsasc.zip'
+        TARGET_PATH = 'D_mgsasc.zip'
+        NAME_FILE_HTML = 'd_megasc.htm'
+        RESULTADO_MEGASENA = UltimoResultado(URL_DOWNLOAD, TARGET_PATH, NAME_FILE_HTML)
+        print('\n ##### RESULTADO MEGA SENA  ##### \n\n')
         tipo = 'megasena'
         nomeArquivo = 'Megasena'
         resultados(tipo, RESULTADO_MEGASENA, nomeArquivo)
