@@ -168,3 +168,7 @@ class RedeNeural():
           fd.write(jogo)  # Inserindo o jogo no txt
           fd.write('\n')
           fd.close()
+      
+      input('Pressione ENTER para continuar...')
+
+        
